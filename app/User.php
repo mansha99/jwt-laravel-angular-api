@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use PHPZen\LaravelRbac\Traits\Rbac;
 
-class User extends Authenticatable
-{
-    use Notifiable;
+class User extends Authenticatable {
+
+    use Rbac;
+
+use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -26,4 +29,5 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
 }
