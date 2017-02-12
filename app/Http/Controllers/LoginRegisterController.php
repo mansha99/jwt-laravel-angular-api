@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Controllers\Controller;
@@ -17,9 +18,14 @@ use App\Http\Utils\MsValidator;
 
 class LoginRegisterController extends Controller {
 
+    public function logout(Request $request) {
+        Auth::logout();
+        return response()->json([
+                    "message" => "success",
+        ]);
+    }
+
     public function authenticate(Request $request) {
-        sleep(1);
-        // grab credentials from the request
         $credentials = $request->only('email', 'password');
         $validator = Validator::make($credentials, [
                     'email' => 'required|email|max:80',
@@ -46,6 +52,7 @@ class LoginRegisterController extends Controller {
         }
 
         // all good so return the token
+        Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']]);
         session()->put('jwt_token', $token); //   
         $roles = \Illuminate\Support\Facades\Auth::user()->roles;
         $oulist = [];
@@ -71,7 +78,7 @@ class LoginRegisterController extends Controller {
         }
         $credentials['password'] = \Illuminate\Support\Facades\Hash::make($credentials['password']);
         $user = \App\User::create($credentials);
-        $userRole = \PHPZen\LaravelRbac\Model\Role::where(['slug' => 'user'])->first();
+        $userRole = \App\Role::where(['name' => 'user'])->first();
         $user->roles()->attach($userRole->id);
 
         return response()->json(['message' => "account created. Please login"]);

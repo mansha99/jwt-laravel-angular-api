@@ -1,6 +1,6 @@
 <html ng-app="app">
     <head>
-        <link rel="stylesheet" type="text/css" href="{{asset('bs/css/bootstrap.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{asset('core/css/bootstrap.css')}}"/>
         <style type="text/css">
             body {
                 padding-top: 90px;
@@ -126,7 +126,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <div class="panel panel-login" ng-controller="LoginController" ng-init="init()">
+                    <div class="panel panel-login" ng-controller="LoginController" ng-init="init('{{Route::getFacadeRoot()->current()->uri()}}')">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-6">

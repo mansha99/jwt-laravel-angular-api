@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use PHPZen\LaravelRbac\Traits\Rbac;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable {
 
-    use Rbac;
+    use EntrustUserTrait;
 
 use Notifiable;
 

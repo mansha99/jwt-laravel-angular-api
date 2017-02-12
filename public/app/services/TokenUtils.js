@@ -1,4 +1,4 @@
-app.factory('TokenUtils', function () {
+app.factory('TokenUtils', function ($http, Utils) {
     var obj = {};
     obj.setToken = function (token) {
         localStorage.setItem("token", token);
@@ -20,7 +20,17 @@ app.factory('TokenUtils', function () {
         roles = JSON.parse(roles);
         return roles[0];
     };
+    obj.validate = function () {
+        var u = Utils.Absolute("validateToken" );
+        var token = this.getToken();
+        return  $http({
+            method: 'GET',
+            url: u,
+            headers: {'Authorization': 'Bearer ' + token}
 
+        });
+
+    };
     //======================================================================
 
     return obj;

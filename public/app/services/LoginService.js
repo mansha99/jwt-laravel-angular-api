@@ -9,6 +9,12 @@ app.factory('LoginService', function ($http, Utils) {
             data: obj
         });
     };
+    service.doLogout = function () {
+        return  $http({
+            method: 'GET',
+            url: Utils.Absolute('logout')
+        });
+    };
     service.doRegister = function (email, password, name) {
         var obj = {email: email, password: password, name: name};
         return  $http({

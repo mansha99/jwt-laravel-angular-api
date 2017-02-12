@@ -30,21 +30,21 @@ class RolesAndUserSeed {
 
 
 
-        $adminRole = new PHPZen\LaravelRbac\Model\Role();
+        $adminRole = new \App\Role();
         $adminRole->name = 'admin';
-        $adminRole->slug = 'admin';
+        $adminRole->display_name = 'admin';
         $adminRole->description = 'System Administrator';
         $adminRole->save();
 
-        $managerRole = new PHPZen\LaravelRbac\Model\Role();
+        $managerRole = new \App\Role();
         $managerRole->name = 'manager';
-        $managerRole->slug = 'manager';
+        $managerRole->display_name = 'manager';
         $managerRole->description = 'Manager';
         $managerRole->save();
 
-        $userRole = new PHPZen\LaravelRbac\Model\Role();
+        $userRole = new \App\Role();
         $userRole->name = 'user';
-        $userRole->slug = 'user';
+        $userRole->display_name = 'user';
         $userRole->description = 'User';
         $userRole->save();
 
