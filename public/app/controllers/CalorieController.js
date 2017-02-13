@@ -46,6 +46,7 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
             $scope.status = response.data.status;
             $scope.message = response.data.message;
             console.log($scope.errors);
+            $scope.$parent.daySummary();
         }, function (response) {
             $scope.loading = false;
             console.log(response);
@@ -64,6 +65,7 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
             $scope.errors = response.data.errors;
             $scope.status = response.data.status;
             $scope.message = response.data.message;
+            $scope.$parent.daySummary();
             console.log($scope.errors);
         }, function (response) {
             $scope.loading = false;
@@ -88,6 +90,7 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
         CalorieService.remove(id).then(function (response) {
             $scope.delete_id = 0;
             $scope.read();
+            $scope.$parent.daySummary();
         });
 
     };

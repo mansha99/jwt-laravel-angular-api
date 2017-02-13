@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Usersetting;
 use \App\Http\Utils\MsValidator;
 use Auth;
 use \Illuminate\Support\Facades\Validator;
+use App\Models\Usersetting;
 
 class UserSettingController extends Controller {
 
@@ -15,7 +15,7 @@ class UserSettingController extends Controller {
     private $user_id;
 
     public function __construct() {
-        $this->user_id = Auth::user()->id;
+        // print_r(Auth::user());
     }
 
     public function index() {
@@ -24,7 +24,7 @@ class UserSettingController extends Controller {
     }
 
     public function store(Request $request) {
-
+        $user_id = Auth::user()->id;
         $data = $request->all();
         $validator = Validator::make($data, [
                     'calperday' => 'required|integer'
@@ -37,7 +37,7 @@ class UserSettingController extends Controller {
         }
 //        $role = $data['role'];
 //        unset($data['role']);
-        $data['user_id'] = $this->user_id;
+        $data['user_id'] = $user_id;
         $model = Usersetting::create($data);
         return response()->json([
                     "model" => $model,
@@ -46,6 +46,7 @@ class UserSettingController extends Controller {
     }
 
     public function update(Request $request, $id) {
+        $user_id = Auth::user()->id;
         $model = Usersetting::where(['id' => $id])->first();
         $data = $request->all();
         $validator = Validator::make($data, [
@@ -57,7 +58,7 @@ class UserSettingController extends Controller {
                         "errors" => MsValidator::ErrorsAssoc($validator),
                             ], 400);
         }
-        $data['user_id'] = $this->user_id;
+        $data['user_id'] = $user_id;
         $model->fill($data)->save();
 
         return response()->json([
@@ -80,15 +81,8 @@ class UserSettingController extends Controller {
     }
 
     public function findForUser() {
-        $model = Usersetting::where(['user_id' => $this->user_id])->first();
-        if (!$model) {
-            $model = new \App\Models\Usersetting();
-            $model->user_id = $this->user_id;
-            $model->calperday = 0;
-            $model->save();
-            $model = Usersetting::where(['user_id' => $this->user_id])->first();
-        }
-
+        $user_id = Auth::user()->id;
+        $model = Usersetting::findForUser($user_id);
         return response()->json([
                     "model" => $model
         ]);

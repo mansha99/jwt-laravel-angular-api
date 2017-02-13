@@ -105,19 +105,31 @@
                 color:#c43333;
             }
         </style>
-        <script type="text/javascript" src="{{asset('core/angular.min.js')}}">
-        </script>
-        <script type="text/javascript" src="{{asset('app/app.js')}}">
-        </script>
-        <script type="text/javascript" src="{{asset('app/services/Utils.js')}}">
-        </script>
-        <script type="text/javascript" src="{{asset('app/services/TokenUtils.js')}}">
-        </script>
-        <script type="text/javascript" src="{{asset('app/services/LoginService.js')}}">
-        </script>
+        <script type="text/javascript" src="{{asset('core/angular.min.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/app.js')}}"></script>
+        <!-- ------------------------------------------------------------------- -->
+        <script type="text/javascript" src="{{asset('app/filters/capitalize.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/filters/range.js')}}"></script>
 
-        <script type="text/javascript" src="{{asset('app/controllers/LoginController.js')}}">
-        </script>
+        <!-- ------------------------------------------------------------------- -->
+        <script type="text/javascript" src="{{asset('app/services/Utils.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/services/TokenUtils.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/services/ListUtils.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/services/LoginService.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/services/CalorieService.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/services/AdminCalorieService.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/services/UserService.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/services/UserSettingService.js')}}"></script>
+
+
+        <!-- ------------------------------------------------------------------- -->
+        <script type="text/javascript" src="{{asset('app/controllers/LoginController.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/controllers/AdminCalorieController.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/controllers/CalorieController.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/controllers/AdminController.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/controllers/UserController.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/controllers/UserSettingController.js')}}"></script>
+
 
 
 

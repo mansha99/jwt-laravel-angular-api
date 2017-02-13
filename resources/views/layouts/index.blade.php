@@ -33,6 +33,8 @@
         <script type="text/javascript" src="{{asset('app/services/CalorieService.js')}}"></script>
         <script type="text/javascript" src="{{asset('app/services/AdminCalorieService.js')}}"></script>
         <script type="text/javascript" src="{{asset('app/services/UserService.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/services/UserSettingService.js')}}"></script>
+        
 
         <!-- ------------------------------------------------------------------- -->
         <script type="text/javascript" src="{{asset('app/controllers/LoginController.js')}}"></script>
@@ -40,6 +42,8 @@
         <script type="text/javascript" src="{{asset('app/controllers/CalorieController.js')}}"></script>
         <script type="text/javascript" src="{{asset('app/controllers/AdminController.js')}}"></script>
         <script type="text/javascript" src="{{asset('app/controllers/UserController.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/controllers/UserSettingController.js')}}"></script>
+        
         <!-- ------------------------------------------------------------------- -->
 
     </head>
@@ -61,9 +65,18 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-md-8">
-
+                            <div class="col-md-6">
+                                
                             </div>
+                            <div class="col-md-2">
+                                <span ng-if="__calperday > 0"
+                                      ng-class="{'bg-danger':__sum > __calperday,'bg-success':__sum <= __calperday}"
+                                      >
+                                    Today's calori intake : 
+                                    <b> [[__sum]] </b>
+                                </span>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -81,6 +94,9 @@
                                         </li>
                                         <li ng-if="hasRole('user')">
                                             <a href="{{url('page/user')}}" >Calorie Manager</a>                                            
+                                        </li>
+                                        <li ng-if="hasRole('user')">
+                                            <a href="{{url('page/usersetting')}}" >User Settings</a>                                            
                                         </li>
                                         <li ng-if="hasRole('admin')">
                                             <a href="{{url('page/admin')}}" >Calorie Manager</a>                                            

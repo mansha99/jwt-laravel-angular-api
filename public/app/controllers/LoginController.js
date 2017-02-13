@@ -1,4 +1,4 @@
-app.controller('LoginController', function ($scope, Utils, TokenUtils, LoginService) {
+app.controller('LoginController', function ($scope, Utils, TokenUtils, LoginService, CalorieService) {
     $scope.form = 'login';
     $scope.email = '';
     $scope.password = '';
@@ -11,12 +11,22 @@ app.controller('LoginController', function ($scope, Utils, TokenUtils, LoginServ
     $scope.action = null;
     $scope.roles = null;
     $scope.user = null;
+    $scope.__sum = 0;
+    $scope.__calperday = 0;
+
     $scope.init = function (action) {
         $scope.action = action;
-
         $scope.validateToken();
+    };
+    $scope.daySummary = function () {
+        CalorieService.daySummary().then(function (response) {
+            console.log('--------------------------------DAY SUMMARY--------------------------');
+            console.log(response);
+            $scope.__sum = response.data.sum;
+            $scope.__calperday = response.data.calperday;
 
 
+        });
     };
     $scope.doLogin = function () {
         $scope.loading = true;
@@ -107,8 +117,19 @@ app.controller('LoginController', function ($scope, Utils, TokenUtils, LoginServ
                 }
 
             }
-            if ($scope.action == "page/user" && !$scope.hasRole('user')) {
-                document.location = Utils.Absolute("/");
+            if ($scope.action == "page/user") {
+                if (!$scope.hasRole('user')) {
+                    document.location = Utils.Absolute("/");
+                } else {
+                    $scope.daySummary();
+                }
+            }
+            if ($scope.action == "page/usersetting") {
+                if (!$scope.hasRole('user')) {
+                    document.location = Utils.Absolute("/");
+                } else {
+                    $scope.daySummary();
+                }
             }
 
             if ($scope.action == "page/admin" && !$scope.hasRole('admin')) {

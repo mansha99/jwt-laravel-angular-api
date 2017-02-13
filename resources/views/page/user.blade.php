@@ -13,7 +13,7 @@
                     <th>Date</th>                    
                     <th>Time</th>                    
                     
-                    <th></th>
+                    <th style="width: 25%"></th>
                 </tr>
             </thead>
             <tbody>

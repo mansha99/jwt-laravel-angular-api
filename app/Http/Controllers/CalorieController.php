@@ -8,10 +8,24 @@ use \App\Models\Calorie;
 use \App\Http\Utils\MsValidator;
 use Auth;
 use \Illuminate\Support\Facades\Validator;
+use \Illuminate\Support\Facades\DB;
 
 class CalorieController extends Controller {
 
     private $paginatePerPage = 10;
+
+    public function daySummary() {
+        $user_id = Auth::user()->id;
+        $date = date("Y-m-d");
+        $result = DB::table('calories')
+                ->select(DB::raw('sum(numcalories) as sum'))
+                ->where('user_id', '=', $user_id)
+                ->where('dt', '=', $date)
+                ->first();
+        $sum = $result->sum == null ? 0 : $result->sum;
+        $usersetting = \App\Models\Usersetting::findForUser($user_id);
+        return response()->json(['sum' => $sum, "calperday" => $usersetting->calperday]);
+    }
 
     private function __modifyList(&$list) {
         foreach ($list as $row) {

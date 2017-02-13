@@ -1,6 +1,16 @@
 app.factory('CalorieService', function ($http, Utils, TokenUtils) {
     var service = {};
     service.entity = "calorie";
+      service.daySummary = function () {
+        var u = Utils.Absolute(this.entity + "/daySummary");
+        var token = TokenUtils.getToken();
+        return $http({
+            url: u,
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token}
+        });
+    };
     service.read = function (page) {
         var u = Utils.Absolute(this.entity + "?page=" + page);
         var token = TokenUtils.getToken();

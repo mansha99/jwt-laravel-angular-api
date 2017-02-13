@@ -17,4 +17,16 @@ class Usersetting extends Model {
         return $this->belongsTo('App\User');
     }
 
+    public static function findForUser($user_id) {
+        $model = Usersetting::where(['user_id' => $user_id])->first();
+        if (!$model) {
+            $model = new \App\Models\Usersetting();
+            $model->user_id = $user_id;
+            $model->calperday = 0;
+            $model->save();
+            $model = Usersetting::where(['user_id' => $user_id])->first();
+        }
+        return $model;
+    }
+
 }
