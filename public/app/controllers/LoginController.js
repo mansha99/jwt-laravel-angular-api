@@ -102,6 +102,9 @@ app.controller('LoginController', function ($scope, Utils, TokenUtils, LoginServ
                 if ($scope.hasRole('user')) {
                     document.location = Utils.Absolute("/page/user");
                 }
+                if ($scope.hasRole('manager')) {
+                    document.location = Utils.Absolute("/page/manager");
+                }
 
             }
             if ($scope.action == "page/user" && !$scope.hasRole('user')) {
@@ -110,6 +113,11 @@ app.controller('LoginController', function ($scope, Utils, TokenUtils, LoginServ
 
             if ($scope.action == "page/admin" && !$scope.hasRole('admin')) {
                 document.location = Utils.Absolute("/");
+            }
+            if ($scope.action == "page/manager") {
+                if (!$scope.hasRole('manager') && !$scope.hasRole('admin')) {
+                    document.location = Utils.Absolute("/");
+                }
             }
 
 
@@ -124,7 +132,7 @@ app.controller('LoginController', function ($scope, Utils, TokenUtils, LoginServ
         });
     };
     $scope.hasRole = function (role) {
-        return $scope.roles.indexOf(role) != -1;
+        return $scope.roles != null && $scope.roles.indexOf(role) != -1;
     };
 
 });

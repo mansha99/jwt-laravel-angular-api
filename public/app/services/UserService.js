@@ -1,8 +1,8 @@
-app.factory('CalorieService', function ($http, Utils, TokenUtils) {
+app.factory('UserService', function ($http, Utils, TokenUtils) {
     var service = {};
-    service.entity = "calorie";
-    service.read = function (page) {
-        var u = Utils.Absolute(this.entity + "?page=" + page);
+    service.entity = "user";
+    service.readAll = function () {
+        var u = Utils.Absolute(this.entity + "/readAll");
         var token = TokenUtils.getToken();
         return $http({
             url: u,
@@ -11,8 +11,8 @@ app.factory('CalorieService', function ($http, Utils, TokenUtils) {
                 'Authorization': 'Bearer ' + token}
         });
     };
-    service.search = function (page, date_from, date_to, time_from, time_to) {
-        var u = Utils.Absolute(this.entity + "/search?page=" + page+"&date_from="+date_from+"&date_to="+date_to+"&time_from="+time_from+"&time_to="+time_to);
+    service.read = function (page) {
+        var u = Utils.Absolute(this.entity + "?page=" + page);
         var token = TokenUtils.getToken();
         return $http({
             url: u,

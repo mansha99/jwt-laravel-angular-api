@@ -1,4 +1,4 @@
-app.controller('CalorieController', function ($scope, Utils, TokenUtils, CalorieService, LoginService, ListUtils) {
+app.controller('AdminCalorieController', function ($scope, Utils, TokenUtils, UserService, AdminCalorieService, LoginService, ListUtils) {
     $scope.date_from = null;
     $scope.date_to = null;
     $scope.time_from = null;
@@ -14,6 +14,8 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
     $scope.kw = '';
     $scope.loading = false;
     $scope.list = [];
+    $scope.list_user = [];
+
     $scope.model = {};
     $scope.errors = [];
 
@@ -24,7 +26,9 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
         $scope.time_from = Utils.getCurrentTime();
         $scope.time_to = Utils.getCurrentTime();
         $scope.read();
+        $scope.readUsers();
         $scope.view = 'list';
+
     };
     $scope.addNew = function () {
         $scope.errors = [];
@@ -39,7 +43,7 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
 
     $scope.store = function () {
         $scope.loading = true;
-        CalorieService.store(Utils.toFormData($scope.model)).then(function (response) {
+        AdminCalorieService.store(Utils.toFormData($scope.model)).then(function (response) {
             $scope.loading = false;
             console.log(response);
             $scope.errors = response.data.errors;
@@ -58,7 +62,7 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
 
     $scope.update = function () {
         $scope.loading = true;
-        CalorieService.update(Utils.toFormData($scope.model), $scope.model.id).then(function (response) {
+        AdminCalorieService.update(Utils.toFormData($scope.model), $scope.model.id).then(function (response) {
             $scope.loading = false;
             console.log(response);
             $scope.errors = response.data.errors;
@@ -85,7 +89,7 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
         $scope.delete_id = id;
     };
     $scope.remove_confirm = function (id) {
-        CalorieService.remove(id).then(function (response) {
+        AdminCalorieService.remove(id).then(function (response) {
             $scope.delete_id = 0;
             $scope.read();
         });
@@ -97,11 +101,23 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
 
     $scope.read = function () {
         $scope.loading = true;
-        CalorieService.read($scope.page, $scope.kw).then(function (response) {
+        AdminCalorieService.read($scope.page, $scope.kw).then(function (response) {
             $scope.loading = false;
             $scope.count = Utils.recordToPage(response.data.total);
             $scope.list = response.data.data;
             $scope.message = $scope.list.length == 0 ? "No record found " : null;
+        });
+    };
+    $scope.readUsers = function () {
+        $scope.loading = true;
+        UserService.readAll().then(function (response) {
+            $scope.loading = false;
+            $scope.list_user = response.data;
+            console.log("===========================USER LIST====================");
+            console.log(response);
+            console.log($scope.list_user);
+            
+            
         });
     };
     $scope.reset = function () {
@@ -111,14 +127,14 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
         $scope.time_from = Utils.getCurrentTime();
         $scope.time_to = Utils.getCurrentTime();
         $scope.page = 1;
-        
+
         $scope.read();
     };
     $scope.doSearch = function () {
         $scope.search = true;
         $scope.page = 1;
         $scope.loading = true;
-        CalorieService.search($scope.page, $scope.date_from, $scope.date_to, $scope.time_from, $scope.time_to).then(function (response) {
+        AdminCalorieService.search($scope.page, $scope.date_from, $scope.date_to, $scope.time_from, $scope.time_to).then(function (response) {
             $scope.loading = false;
             $scope.count = Utils.recordToPage(response.data.total);
             $scope.list = response.data.data;

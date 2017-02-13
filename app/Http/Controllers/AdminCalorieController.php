@@ -9,7 +9,7 @@ use \App\Http\Utils\MsValidator;
 use Auth;
 use \Illuminate\Support\Facades\Validator;
 
-class CalorieController extends Controller {
+class AdminCalorieController extends Controller {
 
     private $paginatePerPage = 10;
 
@@ -26,7 +26,7 @@ class CalorieController extends Controller {
 
     public function search(Request $request) {
         $data = $request->all();
-        $user_id = Auth::user()->id;
+
 
         $validator = Validator::make($data, [
                     'date_from' => 'required|date_format:m-d-Y',
@@ -64,8 +64,8 @@ class CalorieController extends Controller {
         }
         //whereBetween('age', [$ageFrom, $ageTo]);
         $list = Calorie::
-                where('is_deleted', '!=', 1)->
-                where('user_id', $user_id)
+                where('is_deleted', '!=', 1)
+                ->with('user')
                 ->orderBy('id', 'DESC')
                 ->whereBetween('dt', [$date_from, $date_to])
                 ->whereBetween('tm', [$time_from, $time_to])
@@ -75,10 +75,10 @@ class CalorieController extends Controller {
     }
 
     public function index() {
-        $user_id = Auth::user()->id;
+
         $list = Calorie::
-                where('is_deleted', '!=', 1)->
-                where('user_id', $user_id)
+                where('is_deleted', '!=', 1)
+                ->with('user')
                 ->orderBy('id', 'DESC')
                 ->paginate($this->paginatePerPage);
         $this->__modifyList($list);
@@ -86,13 +86,14 @@ class CalorieController extends Controller {
     }
 
     public function store(Request $request) {
-        $user_id = Auth::user()->id;
+
         $data = $request->all();
         $validator = Validator::make($data, [
                     'txt' => 'required|max:512',
                     'numcalories' => 'required|integer',
                     'dt' => 'required|date_format:m-d-Y',
-                    'tm' => 'required|date_format:H:i'
+                    'tm' => 'required|date_format:H:i',
+                    'user_id' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -101,7 +102,7 @@ class CalorieController extends Controller {
                             ], 400);
         }
         $data['is_deleted'] = 0;
-        $data['user_id'] = $user_id;
+
         $data['dt'] = \App\Http\Utils\MsDateUtils::MMDDYYYY_TO_YYYYMMDD($data['dt']);
         $model = Calorie::create($data);
         return response()->json([
@@ -111,13 +112,14 @@ class CalorieController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $user_id = Auth::user()->id;
+
         $data = $request->all();
         $validator = Validator::make($data, [
                     'txt' => 'required|max:512',
                     'numcalories' => 'required|integer',
                     'dt' => 'required|date_format:m-d-Y',
-                    'tm' => 'required|date_format:H:i'
+                    'tm' => 'required|date_format:H:i',
+                    'user_id' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -126,7 +128,7 @@ class CalorieController extends Controller {
                             ], 400);
         }
         $data['dt'] = \App\Http\Utils\MsDateUtils::MMDDYYYY_TO_YYYYMMDD($data['dt']);
-        $model = Calorie::where(['id' => $id, "user_id" => $user_id])->first();
+        $model = Calorie::where(['id' => $id])->first();
         $model->fill($data)->save();
         return response()->json([
                     "model" => $model,
@@ -135,8 +137,8 @@ class CalorieController extends Controller {
     }
 
     public function destroy($id) {
-        $user_id = Auth::user()->id;
-        $model = Calorie::where(['id' => $id, "user_id" => $user_id])->first();
+
+        $model = Calorie::where(['id' => $id])->first();
         $model->delete();
         return response()->json([
                     "message" => "Record Deleted",

@@ -27,5 +27,14 @@ class PageController extends Controller {
         }
         return view('page.admin');
     }
+   public function manager() {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        if (!Auth::user()->hasRole('manager')&&!Auth::user()->hasRole('admin')) {
+            return redirect('/');
+        }
+        return view('page.manager');
+    }
 
 }

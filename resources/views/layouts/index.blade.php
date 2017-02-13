@@ -24,20 +24,22 @@
         <!-- ------------------------------------------------------------------- -->
         <script type="text/javascript" src="{{asset('app/filters/capitalize.js')}}"></script>
         <script type="text/javascript" src="{{asset('app/filters/range.js')}}"></script>
-        
+
         <!-- ------------------------------------------------------------------- -->
         <script type="text/javascript" src="{{asset('app/services/Utils.js')}}"></script>
         <script type="text/javascript" src="{{asset('app/services/TokenUtils.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/services/ListUtils.js')}}"></script>
         <script type="text/javascript" src="{{asset('app/services/LoginService.js')}}"></script>
         <script type="text/javascript" src="{{asset('app/services/CalorieService.js')}}"></script>
-        <script type="text/javascript" src="{{asset('app/services/ListUtils.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/services/AdminCalorieService.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/services/UserService.js')}}"></script>
 
         <!-- ------------------------------------------------------------------- -->
         <script type="text/javascript" src="{{asset('app/controllers/LoginController.js')}}"></script>
+        <script type="text/javascript" src="{{asset('app/controllers/AdminCalorieController.js')}}"></script>
         <script type="text/javascript" src="{{asset('app/controllers/CalorieController.js')}}"></script>
         <script type="text/javascript" src="{{asset('app/controllers/AdminController.js')}}"></script>
-        <!-- ------------------------------------------------------------------- -->
-
+        <script type="text/javascript" src="{{asset('app/controllers/UserController.js')}}"></script>
         <!-- ------------------------------------------------------------------- -->
 
     </head>
@@ -77,11 +79,21 @@
                                         <li>
                                             <a href="{{url("/")}}">Home</a>                                            
                                         </li>
-                                        <li ng-hide="user == null">
+                                        <li ng-if="hasRole('user')">
+                                            <a href="{{url('page/user')}}" >Calorie Manager</a>                                            
+                                        </li>
+                                        <li ng-if="hasRole('admin')">
+                                            <a href="{{url('page/admin')}}" >Calorie Manager</a>                                            
+                                        </li>
+                                        <li ng-if="hasRole('manager') || hasRole('admin')">
+                                            <a href="{{url('page/manager')}}" >Users</a>                                            
+                                        </li>
+                                        <li ng-if="user != null">
                                             <a href="#" ng-click="doLogout()">Logout</a>                                            
                                         </li>
 
                                     </ul>
+
                                 </div>
                             </div>
                         </div>

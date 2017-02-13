@@ -1,18 +1,15 @@
 @extends('layouts.index')
 @section('content')
-<div ng-controller="CalorieController" ng-init="init()">
+<div ng-controller="UserController" ng-init="init()">
 
     <div ng-show="view == 'list'">
-        @include('page.calorie.toolbar')
+        @include('page.user.toolbar')
 
         <table class="table table-striped" ng-if="list.length > 0">
             <thead>
                 <tr>
-                    <th>Meal</th>                    
-                    <th>Calorie</th>                    
-                    <th>Date</th>                    
-                    <th>Time</th>                    
-                    
+                    <th>Name</th>                    
+                    <th>Email</th>                                       
                     <th></th>
                 </tr>
             </thead>
@@ -20,18 +17,11 @@
                 <tr ng-repeat="object in list track by $index">
                   
                     <td>
-                        [[object.txt]]
+                        [[object.name]]
                     </td>
                     <td>
-                        [[object.numcalories]]
+                        [[object.email]]
                     </td>
-                    <td>
-                        [[object.dt]]
-                    </td>
-                    <td>
-                        [[object.tm]]
-                    </td>
-                    
                     <td>
                         <a href="#" ng-click="edit(object.id)">
                             <i class="glyphicon glyphicon-pencil"></i>
@@ -59,13 +49,13 @@
                 </tr>
             </tbody>
         </table>
-         @include('page.calorie.pagination')
+         @include('page.user.pagination')
     </div>
     <div ng-show="view == 'create'">
-          @include('page.calorie.create')
+          @include('page.user.create')
     </div>
     <div ng-show="view == 'edit'">
-          @include('page.calorie.edit')
+          @include('page.user.edit')
     </div>
 
 

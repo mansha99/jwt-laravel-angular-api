@@ -28,4 +28,12 @@ class MsDateUtils {
         return $a[1] . '-' . $a[2] . '-' . $a[0];
     }
 
+    public static function CompareDate($date1, $date2) {
+        return strtotime($date1) - strtotime($date2);
+    }
+
+    public static function CompareTime($date1, $date2) {
+        return strtotime($date1) - strtotime($date2);
+    }
+
 }

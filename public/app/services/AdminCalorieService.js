@@ -1,6 +1,6 @@
-app.factory('CalorieService', function ($http, Utils, TokenUtils) {
+app.factory('AdminCalorieService', function ($http, Utils, TokenUtils) {
     var service = {};
-    service.entity = "calorie";
+    service.entity = "admincalorie";
     service.read = function (page) {
         var u = Utils.Absolute(this.entity + "?page=" + page);
         var token = TokenUtils.getToken();

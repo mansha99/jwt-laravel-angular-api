@@ -1,10 +1,4 @@
-app.controller('CalorieController', function ($scope, Utils, TokenUtils, CalorieService, LoginService, ListUtils) {
-    $scope.date_from = null;
-    $scope.date_to = null;
-    $scope.time_from = null;
-    $scope.time_to = null;
-    $scope.search = null;
-    //////////////////////////////////////////////////////////
+app.controller('UserController', function ($scope, Utils, TokenUtils, UserService, LoginService, ListUtils) {
     $scope.delete_id = 0;
     $scope.message = null;
     $scope.status = null;
@@ -15,31 +9,26 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
     $scope.loading = false;
     $scope.list = [];
     $scope.model = {};
-    $scope.errors = [];
 
     $scope.init = function () {
-        $scope.search = false;
-        $scope.date_from = Utils.getCurrentDate();
-        $scope.date_to = Utils.getCurrentDate();
-        $scope.time_from = Utils.getCurrentTime();
-        $scope.time_to = Utils.getCurrentTime();
         $scope.read();
         $scope.view = 'list';
     };
     $scope.addNew = function () {
-        $scope.errors = [];
-        $scope.model = {dt: Utils.getCurrentDate(), tm: Utils.getCurrentTime()};
+        $scope.errors=[];
+        $scope.model = {};        
         $scope.view = 'create';
     };
     $scope.edit = function (id) {
-        $scope.errors = [];
+        $scope.errors=[];
         $scope.model = ListUtils.__find($scope.list, id);
         $scope.view = 'edit';
     };
 
     $scope.store = function () {
         $scope.loading = true;
-        CalorieService.store(Utils.toFormData($scope.model)).then(function (response) {
+
+        UserService.store(Utils.toFormData($scope.model)).then(function (response) {
             $scope.loading = false;
             console.log(response);
             $scope.errors = response.data.errors;
@@ -55,10 +44,9 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
             console.log($scope.errors);
         });
     };
-
     $scope.update = function () {
         $scope.loading = true;
-        CalorieService.update(Utils.toFormData($scope.model), $scope.model.id).then(function (response) {
+        UserService.update(Utils.toFormData($scope.model),$scope.model.id).then(function (response) {
             $scope.loading = false;
             console.log(response);
             $scope.errors = response.data.errors;
@@ -85,7 +73,7 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
         $scope.delete_id = id;
     };
     $scope.remove_confirm = function (id) {
-        CalorieService.remove(id).then(function (response) {
+        UserService.remove(id).then(function (response) {
             $scope.delete_id = 0;
             $scope.read();
         });
@@ -97,73 +85,31 @@ app.controller('CalorieController', function ($scope, Utils, TokenUtils, Calorie
 
     $scope.read = function () {
         $scope.loading = true;
-        CalorieService.read($scope.page, $scope.kw).then(function (response) {
+        UserService.read($scope.page, $scope.kw).then(function (response) {
             $scope.loading = false;
             $scope.count = Utils.recordToPage(response.data.total);
             $scope.list = response.data.data;
-            $scope.message = $scope.list.length == 0 ? "No record found " : null;
-        });
-    };
-    $scope.reset = function () {
-        $scope.search = false;
-        $scope.date_from = Utils.getCurrentDate();
-        $scope.date_to = Utils.getCurrentDate();
-        $scope.time_from = Utils.getCurrentTime();
-        $scope.time_to = Utils.getCurrentTime();
-        $scope.page = 1;
-        
-        $scope.read();
-    };
-    $scope.doSearch = function () {
-        $scope.search = true;
-        $scope.page = 1;
-        $scope.loading = true;
-        CalorieService.search($scope.page, $scope.date_from, $scope.date_to, $scope.time_from, $scope.time_to).then(function (response) {
-            $scope.loading = false;
-            $scope.count = Utils.recordToPage(response.data.total);
-            $scope.list = response.data.data;
-            $scope.errors = [];
-            $scope.message = null;
-            $scope.message = $scope.list.length == 0 ? "No record found " : null;
-        }, function (response) {
-            $scope.loading = false;
-            $scope.list = [];
-            $scope.errors = response.data.errors;
-            $scope.message = response.data.message;
-
         });
     };
     $scope.getpage = function (n) {
         $scope.page = n;
-        if ($scope.search == false)
-            $scope.read();
-        else
-            $scope.search();
+        $scope.read();
     };
     $scope.search = function () {
         $scope.page = 1;
-        if ($scope.search == false)
-            $scope.read();
-        else
-            $scope.search();
+        $scope.read();
 
     };
     $scope.next = function () {
         if ($scope.page < $scope.count) {
             $scope.page++;
-            if ($scope.search == false)
-                $scope.read();
-            else
-                $scope.search();
+            $scope.read();
         }
     };
     $scope.pre = function () {
         if ($scope.page > 1) {
             $scope.page--;
-            if ($scope.search == false)
-                $scope.read();
-            else
-                $scope.search();
+            $scope.read();
         }
     };
 

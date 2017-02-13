@@ -4,7 +4,7 @@
             <form class="form-inline">
                 <div class="form-group">
                     <label>
-                        Calorie Management
+                       User Management
                     </label>
 <!--                    <input class="form-control" ng-model="kw"/>-->
                 </div>

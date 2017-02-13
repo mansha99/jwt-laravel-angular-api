@@ -1,8 +1,8 @@
-  @include('page.user_toolbar_form')
+  @include('page.admin_calorie.toolbar_form')
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
         <form action="#" method="POST">
-              @include('page.user_form')            
+              @include('page.admin_calorie.form')            
             <button 
                 type="button" 
                 ng-disabled="loading == true" 
