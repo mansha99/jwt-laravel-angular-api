@@ -1,7 +1,8 @@
 app.factory('Utils', function () {
     var service = {};
     service.Absolute = function (url) {
-        return 'http://' + location.host + '/' + url;
+        //return 'http://' + location.host + '/' + url;
+        return "http://localhost/manish-sharma/public/index.php/" + url;
     };
     service.param = function (param, dummyPath) {
         var sPageURL = dummyPath || window.location.search.substring(1),

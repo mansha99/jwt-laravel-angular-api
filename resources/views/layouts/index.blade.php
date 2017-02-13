@@ -59,21 +59,25 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="logo">
+                                <div>
                                     <a href="{{url('/')}}">
                                         Calorie App
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <span ng-if="__calperday > 0"
-                                      ng-class="{'bg-danger':__sum > __calperday,'bg-success':__sum <= __calperday}"
+                                      ng-class="{'logo':true, 'bg-danger':__sum > __calperday,'bg-success':__sum <= __calperday}"
                                       >
+                                    
                                     Today's calori intake : 
                                     <b> [[__sum]] </b>
+                                    <i  class="glyphicon glyphicon-warning-sign" ng-if="__sum > __calperday"></i>
+                                    <i  class="glyphicon glyphicon-ok" ng-if="__sum <= __calperday"></i>
+                                    
                                 </span>
                             </div>
                             
