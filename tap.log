@@ -1,0 +1,20 @@
+TAP version 13
+ok 1 - Tests\Unit\CalorieTest::testDaySummary
+# --------------Calorie::DaySummary------------------
+ok 2 - Tests\Unit\CalorieTest::testIndex
+# --------------Calorie::Index------------------
+ok 3 - Tests\Unit\CalorieTest::testStore
+# --------------Calorie::Store------------------
+ok 4 - Tests\Unit\CalorieTest::testUpdate
+# --------------Calorie::Update------------------
+ok 5 - Tests\Unit\CalorieTest::testDelete
+# --------------Calorie::Delete------------------
+ok 6 - Tests\Unit\UserRegistrationTest::testRegistration
+# --------------Registration------------------
+ok 7 - Tests\Unit\UserRegistrationTest::testLogin
+# --------------Login------------------
+ok 8 - Tests\Unit\UserRegistrationTest::testLogout
+# --------------Logout------------------
+ok 9 - Tests\Unit\UserRegistrationTest::testValidateToken
+# --------------ValidateToken------------------
+1..9

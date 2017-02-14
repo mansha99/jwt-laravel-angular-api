@@ -21,7 +21,7 @@ class TokenController extends Controller {
             foreach ($roles as $role) {
                 $outlist[] = $role->name;
             }
-            return response()->json(array("user" => $user, "roles" => $outlist));
+            return response()->json(array("user" => $user, "roles" => $outlist, "status" => 'success'));
         } else {
             return response()->json(array("message" => "You are not authorized", "status" => "invalid_token"), 400);
         }

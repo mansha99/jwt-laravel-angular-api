@@ -1,0 +1,1 @@
+vendor\bin\phpunit --verbose --log-tap tap.log

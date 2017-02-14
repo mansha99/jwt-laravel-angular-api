@@ -87,14 +87,15 @@ app.controller('LoginController', function ($scope, Utils, TokenUtils, LoginServ
             console.log(response);
             TokenUtils.setToken("none");
             $scope.user = null;
-            document.location = Utils.Absolute("/");
+           // alert( Utils.Absolute("login"));
+            document.location = Utils.Absolute("login");
 
         }, function (response) {
             $scope.loading = false;
             console.log('--------------------------------ERROR--------------------------');
             console.log(response);
             $scope.user = null;
-            document.location = Utils.Absolute("/");
+            document.location = Utils.Absolute("");
 
 
         });

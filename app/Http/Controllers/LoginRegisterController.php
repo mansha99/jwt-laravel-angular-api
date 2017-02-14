@@ -59,7 +59,7 @@ class LoginRegisterController extends Controller {
         foreach ($roles as $role) {
             $oulist[] = $role->name;
         }
-        return response()->json(['token' => $token, "roles" => $oulist]);
+        return response()->json(['token' => $token, "roles" => $oulist,'status'=>'success']);
     }
 
     public function register(Request $request) {
